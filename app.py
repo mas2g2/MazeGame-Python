@@ -1,5 +1,15 @@
+from playsound import playsound
+
+def check_for_mine(mine_coor, x, y):
+    for item in mine_coor:
+        if item == (x,y):
+            playsound('explosion.wav')
+            return True
+
+    return False
+
 # The following code was obtained from the URL:
-#   https://realpython.com/pygame-a-primer/ 
+
 
 # Simple pygame program
 
@@ -50,6 +60,17 @@ screen = pygame.display.set_mode([500, 500])
 # create a surface object, image is drawn on it
 image = pygame.image.load(r'maze.png');
 image = pygame.transform.scale(image,(500,500))
+
+# win/lose screen
+
+win = pygame.image.load('win.jpg');
+win = pygame.transform.scale(win,(500,500))
+lose = pygame.image.load('youlose.png')
+lose = pygame.transform.scale(lose,(500,500))
+
+# Mine coordinates
+
+mine_coor = [(415,205),(265,215),(85,275),(35,405),(225,385),(345,95),(335,165)]
 
 # Setting color at a given pixel where collision was not being detected
 
@@ -154,7 +175,8 @@ while running:
     # Copying the image surface
     # to display surface object at
     # (0,0) coordinate
-
+    
+    
     screen.blit(image,(0,0))
     
 
@@ -166,14 +188,37 @@ while running:
     # The last parameter is the radius of my circle
 
     print("Color: ",image.get_at((x_pos,y_pos)))
-    print("Position: ",(x_pos,y_pos))
+    print("Circle Position: ",(x_pos,y_pos))
+    
+    if check_for_mine(mine_coor,x_pos,y_pos) == True:
+        print("You lose")
+        screen.fill((255,255,255))
+        screen.blit(lose,(0,0))
+        pygame.display.update()
+        input("Press ENter ...")
+        break
+
+    if (x_pos,y_pos) == (25,25):
+        input("Enter a key to exit..")
+        running = False
+
+    if y_pos >= 445:
+        print("You won!");
+        playsound('win.wav')
+        screen.fill((255,255,255))
+        screen.blit(win,(0,0))
+        pygame.display.update()
+        input("Press key to quit ...")
+        break
+
     pygame.draw.circle(screen, (0, 0, 255), (x_pos, y_pos),10)
     
 
     # Flip the display, updates content in display
 
     pygame.display.flip()
-
+    
+        
     #if collision == True:
      #   running = False
 
