@@ -8,6 +8,71 @@ def check_for_mine(mine_coor, x, y):
 
     return False
 
+def check_for_collision(canvas,x,y,direction):
+    
+    if direction == 'UP':
+        if canvas.get_at((x,y-10)) == (255,255,255):
+            return False
+        else:
+            return True
+
+    if direction == 'DOWN':
+        if canvas.get_at((x,y+10)) == (255,255,255):
+            return False
+        else:
+            return True
+
+    if direction == 'LEFT':
+        if canvas.get_at((x-10,y)) == (255,255,255):
+            return False
+        else:
+            return True
+
+    if direction == 'RIGHT':
+        if canvas.get_at((x+10,y)) == (255,255,255):
+            return False
+        else:
+            return True
+
+
+def moveUp(canvas,x,y):
+
+    if check_for_collision(canvas,x,y,'UP') == False:
+        y -= 10;        
+        return y
+
+    else:
+        return y
+        
+
+
+def moveDown(canvas,x,y):
+
+    if check_for_collision(canvas,x,y,'DOWN') == False:
+        y+=10
+        return y
+    else:
+        return y
+
+def moveLeft(canvas,x,y):
+
+    if check_for_collision(canvas, x, y, 'LEFT') == False:
+        x-=10
+        return x
+    else:
+        return x
+
+def moveRight(canvas,x,y):
+
+    if check_for_collision(canvas, x, y, 'RIGHT') == False:
+        x+= 10
+        return x
+    else:
+        return x
+
+
+
+
 # The following code was obtained from the URL:
 
 
@@ -23,6 +88,7 @@ import pygame
 # Updated to conform to flake8 and black standards
 
 from pygame.locals import (
+
 
     K_UP,
 
@@ -44,7 +110,8 @@ pygame.init()
 
 # Object pos
 
-x_pos,y_pos = 415,15
+x_pos_b,y_pos_b = 415,15
+x_pos_r,y_pos_r = 75,425
 
 # object position change in case of key stroke event
 delta_x, delta_y = 10,10
@@ -63,14 +130,30 @@ image = pygame.transform.scale(image,(500,500))
 
 # win/lose screen
 
-win = pygame.image.load('win.jpg');
-win = pygame.transform.scale(win,(500,500))
-lose = pygame.image.load('youlose.png')
-lose = pygame.transform.scale(lose,(500,500))
+redwin = pygame.image.load('redwins.png');
+redwin = pygame.transform.scale(redwin,(500,500))
+bluewin = pygame.image.load('bluewins.png')
+bluewin = pygame.transform.scale(bluewin,(500,500))
+
+bomb = pygame.image.load('bombs/bomb1.jpeg')
+bomb = pygame.transform.scale(bomb,(50,50))
 
 # Mine coordinates
 
-mine_coor = [(415,205),(265,215),(85,275),(35,405),(225,385),(345,95),(335,165)]
+#mine_coor = [(415,205),(265,215),(85,275),(35,405),(225,385),(345,95),(335,165)]
+mine_coor_b = []
+mine_coor_r = []
+
+#   119 -> W
+#   115 -> S
+#   97 -> A
+#   100 -> D
+
+
+
+wasd = [119,115,97,100]
+
+
 
 # Setting color at a given pixel where collision was not being detected
 
@@ -133,37 +216,43 @@ while running:
 
         if event.type == KEYDOWN:
             
-            if event.key == K_UP and image.get_at((x_pos,y_pos-10)) == (255,255,255):
-                print("Up was pressed")
-                y_pos -= 10
+            if event.key == K_UP:
+                y_pos_b = moveUp(image,x_pos_b,y_pos_b)
 
-            elif image.get_at((x_pos,y_pos-10)) != (255,255,255):
-                collision == True
+            if event.key == K_DOWN:
+                y_pos_b = moveDown(image,x_pos_b,y_pos_b) 
 
-            if event.key == K_DOWN and image.get_at((x_pos,y_pos+10)) == (255,255,255):
-                print("Down was pressed")
-                y_pos += 10
+            if event.key == K_RIGHT:
+                x_pos_b = moveRight(image, x_pos_b, y_pos_b)
+
+            if event.key == K_LEFT:
+                x_pos_b = moveLeft(image, x_pos_b,y_pos_b)
+        
             
-            elif image.get_at((x_pos,y_pos+10)) == (255,255,255):
-                collision = True
+            if event.key == 119:
+                y_pos_r = moveUp(image,x_pos_r,y_pos_r)
 
-            if event.key == K_RIGHT and image.get_at((x_pos+10,y_pos))==(255,255,255):
+            if event.key == 115:
+                y_pos_r = moveDown(image,x_pos_r,y_pos_r)
 
-                print("Right was pressed");
-                x_pos += 10
+            if event.key == 97:
+                x_pos_r = moveLeft(image,x_pos_r, y_pos_r)
 
-            elif image.get_at((x_pos+10,y_pos)) == (255,255,255):
-                collision =True
+            if event.key == 100:
+                x_pos_r = moveRight(image, x_pos_r, y_pos_r)
+            
+            # X was pressed 
+            if event.key == 120:
+                mine_coor_r.append((x_pos_r,y_pos_r))
+            
+            # Right Control key was presssed
+            if event.key == 305:
+                mine_coor_b.append((x_pos_b,y_pos_b))
 
-            if event.key == K_LEFT and image.get_at((x_pos-10,y_pos)) == (255,255,255):
-                print("Left was pressed");
-                x_pos -= 10
+            print(event.key)
 
-            elif image.get_at((x_pos-10,y_pos)) == (255,255,255):
-                collision = True
-
-        if event.type == pygame.KEYUP:
-            print("Key was released")
+#        if event.type == pygame.KEYUP:
+#            print("Key was released")
 
 
     # Fill the background with white
@@ -187,32 +276,49 @@ while running:
     # values, the thrid parameter will be the coordinates of the center of my figure
     # The last parameter is the radius of my circle
 
-    print("Color: ",image.get_at((x_pos,y_pos)))
-    print("Circle Position: ",(x_pos,y_pos))
+    #print("Color: ",image.get_at((x_pos_b,y_pos_b)))
+    #print("Circle Position: ",(x_pos_b,y_pos_b))
     
-    if check_for_mine(mine_coor,x_pos,y_pos) == True:
-        print("You lose")
+    if check_for_mine(mine_coor_r,x_pos_b,y_pos_b) == True:
+        screen.blit(bomb,(x_pos_b-10,y_pos_b-10))
+        print("Blue lost")
         screen.fill((255,255,255))
-        screen.blit(lose,(0,0))
+        screen.blit(redwin,(0,0))
         pygame.display.update()
         input("Press ENter ...")
         break
 
-    if (x_pos,y_pos) == (25,25):
-        input("Enter a key to exit..")
-        running = False
+    if check_for_mine(mine_coor_b, x_pos_r, y_pos_r) == True:
+        print("Red lost")
+        screen.fill((255,255,255))
+        screen.blit(bluewin,(0,0))
+        pygame.display.update()
+        input("Press ENter ...")
+        break
 
-    if y_pos >= 445:
-        print("You won!");
+
+
+    if y_pos_b >= 445:
+        print("Blue won!");
         playsound('win.wav')
         screen.fill((255,255,255))
-        screen.blit(win,(0,0))
+        screen.blit(bluewin,(0,0))
         pygame.display.update()
         input("Press key to quit ...")
         break
 
-    pygame.draw.circle(screen, (0, 0, 255), (x_pos, y_pos),10)
-    
+    if y_pos_r <= 15:
+        print("Red won!")
+        playsound('win.wav')
+        screen.fill((255,255,255))
+        screen.blit(redwin,(0,0))
+        pygame.display.update()
+        input("Press key to quit ...")
+        break
+
+
+    pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),10)
+    pygame.draw.circle(screen, (255, 0, 0), (x_pos_r, y_pos_r), 10)
 
     # Flip the display, updates content in display
 
