@@ -285,7 +285,6 @@ while running:
         screen.fill((255,255,255))
         screen.blit(redwin,(0,0))
         pygame.display.update()
-        input("Press ENter ...")
         break
 
     if check_for_mine(mine_coor_b, x_pos_r, y_pos_r) == True:
@@ -293,7 +292,6 @@ while running:
         screen.fill((255,255,255))
         screen.blit(bluewin,(0,0))
         pygame.display.update()
-        input("Press ENter ...")
         break
 
 
@@ -304,7 +302,6 @@ while running:
         screen.fill((255,255,255))
         screen.blit(bluewin,(0,0))
         pygame.display.update()
-        input("Press key to quit ...")
         break
 
     if y_pos_r <= 15:
@@ -313,7 +310,6 @@ while running:
         screen.fill((255,255,255))
         screen.blit(redwin,(0,0))
         pygame.display.update()
-        input("Press key to quit ...")
         break
 
 
