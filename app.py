@@ -1,6 +1,11 @@
 from playsound import playsound
+import time
+
+# This function will be used to checck if the player is currently steping on a mine
 
 def check_for_mine(mine_coor, x, y):
+
+    # The following for loop will iterate through
     for item in mine_coor:
         if item == (x,y):
             playsound('explosion.wav')
@@ -8,6 +13,29 @@ def check_for_mine(mine_coor, x, y):
 
     return False
 
+
+
+
+
+# This function checks for and deactivates the mines of another player
+def check_perimeter_for_mine(mine_coor, x, y):
+    perimeter = [(x-10,y), (x+10,y), (x,y-10), (x,y+10), (x-10,y-10), (x+10,y-10), (x-10,y+10),(x+10,y+10)]
+    deactivate_mines = []
+    for coor in perimeter:
+        for item in mine_coor:
+            if coor == item:
+                deactivate_mines.append(coor)
+                mine_coor.remove(coor)
+    return deactivate_mines
+
+
+
+
+
+
+
+
+# The function checks for walls and keeps the playerr from walking through walls
 def check_for_collision(canvas,x,y,direction):
     
     if direction == 'UP':
@@ -35,6 +63,13 @@ def check_for_collision(canvas,x,y,direction):
             return True
 
 
+
+
+
+
+
+
+
 def moveUp(canvas,x,y):
 
     if check_for_collision(canvas,x,y,'UP') == False:
@@ -46,6 +81,12 @@ def moveUp(canvas,x,y):
         
 
 
+
+
+
+
+
+
 def moveDown(canvas,x,y):
 
     if check_for_collision(canvas,x,y,'DOWN') == False:
@@ -53,6 +94,14 @@ def moveDown(canvas,x,y):
         return y
     else:
         return y
+
+
+
+
+
+
+
+
 
 def moveLeft(canvas,x,y):
 
@@ -62,6 +111,13 @@ def moveLeft(canvas,x,y):
     else:
         return x
 
+
+
+
+
+
+
+
 def moveRight(canvas,x,y):
 
     if check_for_collision(canvas, x, y, 'RIGHT') == False:
@@ -69,6 +125,13 @@ def moveRight(canvas,x,y):
         return x
     else:
         return x
+
+
+
+
+
+
+
 
 
 
@@ -144,10 +207,12 @@ bomb = pygame.transform.scale(bomb,(50,50))
 mine_coor_b = []
 mine_coor_r = []
 
-#   119 -> W
-#   115 -> S
-#   97 -> A
-#   100 -> D
+#   101 -> E (jam mine)
+#   307 -> right alt (jam mine)
+#   119 -> W (move up)
+#   115 -> S (move down)
+#   97 -> A (move left)
+#   100 -> D (move right)
 
 
 
@@ -194,9 +259,19 @@ running = True
 # Boolean variable to check for collision
 
 collision = False
+start = time.time()
+
+time.clock()
+
+elapsed = 0
+old_elapsed = 0
+
+red_deactivated = False
+blue_deactivated = False
+mine  = []
 
 while running:
-    
+    elapsed = time.time() - start    
     # Check for collision
 
 
@@ -218,15 +293,20 @@ while running:
             
             if event.key == K_UP:
                 y_pos_b = moveUp(image,x_pos_b,y_pos_b)
+                pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),10)
+
 
             if event.key == K_DOWN:
                 y_pos_b = moveDown(image,x_pos_b,y_pos_b) 
+                pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),10)
 
             if event.key == K_RIGHT:
                 x_pos_b = moveRight(image, x_pos_b, y_pos_b)
+                pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),10)
 
             if event.key == K_LEFT:
                 x_pos_b = moveLeft(image, x_pos_b,y_pos_b)
+                pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),10)
         
             
             if event.key == 119:
@@ -248,13 +328,58 @@ while running:
             # Right Control key was presssed
             if event.key == 305:
                 mine_coor_b.append((x_pos_b,y_pos_b))
+            
 
-            print(event.key)
+            # CHeck if red player pressed E,
+            # He will deactivate the mines deployed by blue 
+            # player for 5 seconds
+
+            if event.key == 101:
+                red_deactivated = True
+                mines = check_perimeter_for_mine(mine_coor_b,x_pos_r,y_pos_r)
+                for item in mines:
+                    mine.append(item)
+                if mine != []:
+                    old_elapsed = elapsed
+                    print(old_elapsed)
+            
+            # CHeck if blue player pressed right alt,
+            # if so blue player will deactivate red player's mines for five
+            # seconds
+
+            if event.key == 307:
+                blue_deactivated = True
+                mines = check_perimeter_for_mine(mine_coor_r, x_pos_b, y_pos_b)
+                for item in mines:
+                    mine.append(item)
+                
+                if mine != []:
+                     
+                    old_elapsed = elapsed
+                    print(old_elapsed)
+
+    # Here we will reactivate mines that were deactivated 5 seconds age
+    if elapsed >= old_elapsed+5 and old_elapsed != 0:
+        print("Hello I'm yelo")
+        if red_deactivated == True:
+            red_deativated = False
+            for item in mine:
+                mine_coor_b.append(item)
+                mine.remove(item)
+
+        if blue_deactivated == True:
+            blue_deactivated = False
+            for item in mine:
+                mine_coor_r.append(item)
+                mine.remove(item)
+                
+            
+    #print(elapsed, old_elapsed)
 
 #        if event.type == pygame.KEYUP:
 #            print("Key was released")
 
-
+    
     # Fill the background with white
     # This is done by setting all of our RGB
     # values to 255
