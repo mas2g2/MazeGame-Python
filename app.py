@@ -4,6 +4,8 @@ import threading
 
 #I'm using this to define the walkthrough ability
 phasing = False;
+phaseStart = 0;
+phasingReady = True;
 
 # This function will be used to checck if the player is currently steping on a mine
 
@@ -17,9 +19,13 @@ def check_for_mine(mine_coor, x, y):
 
     return False
 
-def setPhasingFalse():
-    phasing = False;
-    print("phasing is " + str(phasing));
+#def setPhasingTrue():
+ #   phasing = True;
+  #  print("phasing is " + str(phasing));
+
+#def setPhasingFalse():
+ #   phasing = False;
+  #  print("phasing is " + str(phasing));
     
 
 
@@ -301,11 +307,11 @@ while running:
         if event.type == KEYDOWN:
             
             #this is the phasing/walkthrough ability
-            if event.key == K_1:
+            if event.key == K_1 and phasingReady == True:
                 phasing = True;
+                phasingReady = False;
+                phaseStart = elapsed;
                 print("phasing is " + str(phasing));
-                timer = threading.Timer(4.0, setPhasingFalse);
-                timer.start();
             
             if event.key == K_UP:
                 y_pos_b = moveUp(image,x_pos_b,y_pos_b)
@@ -374,7 +380,7 @@ while running:
                     old_elapsed = elapsed
                     print(old_elapsed)
 
-    # Here we will reactivate mines that were deactivated 5 seconds age
+    # Here we will reactivate mines that were deactivated 5 seconds ago
     if elapsed >= old_elapsed+5 and old_elapsed != 0:
         print("Hello I'm yelo")
         if red_deactivated == True:
@@ -389,7 +395,15 @@ while running:
                 mine_coor_r.append(item)
                 mine.remove(item)
                 
-            
+    #here we will reset the phasing variable so you cant just walk through walls all day
+    if elapsed >= phaseStart + 1:
+        phasing = False;
+        
+    #cooldown timer for phasing
+    if elapsed >= phaseStart + 5:
+        phasingReady = True;
+        
+    
     #print(elapsed, old_elapsed)
 
 #        if event.type == pygame.KEYUP:
