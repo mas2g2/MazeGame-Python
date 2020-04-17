@@ -1,5 +1,9 @@
 from playsound import playsound
 import time
+import threading
+
+#I'm using this to define the walkthrough ability
+phasing = False;
 
 # This function will be used to checck if the player is currently steping on a mine
 
@@ -13,8 +17,10 @@ def check_for_mine(mine_coor, x, y):
 
     return False
 
-
-
+def setPhasingFalse():
+    phasing = False;
+    print("phasing is " + str(phasing));
+    
 
 
 # This function checks for and deactivates the mines of another player
@@ -39,25 +45,25 @@ def check_perimeter_for_mine(mine_coor, x, y):
 def check_for_collision(canvas,x,y,direction):
     
     if direction == 'UP':
-        if canvas.get_at((x,y-10)) == (255,255,255):
-            return False
+        if canvas.get_at((x,y-10)) == (255,255,255) or phasing == True:
+            return False#if white or phasing, no collision
         else:
             return True
 
     if direction == 'DOWN':
-        if canvas.get_at((x,y+10)) == (255,255,255):
+        if canvas.get_at((x,y+10)) == (255,255,255) or phasing == True:
             return False
         else:
             return True
 
     if direction == 'LEFT':
-        if canvas.get_at((x-10,y)) == (255,255,255):
+        if canvas.get_at((x-10,y)) == (255,255,255) or phasing == True:
             return False
         else:
             return True
 
     if direction == 'RIGHT':
-        if canvas.get_at((x+10,y)) == (255,255,255):
+        if canvas.get_at((x+10,y)) == (255,255,255) or phasing == True:
             return False
         else:
             return True
@@ -71,7 +77,7 @@ def check_for_collision(canvas,x,y,direction):
 
 
 def moveUp(canvas,x,y):
-
+    print("phasing is " + str(phasing));
     if check_for_collision(canvas,x,y,'UP') == False:
         y -= 10;        
         return y
@@ -88,7 +94,7 @@ def moveUp(canvas,x,y):
 
 
 def moveDown(canvas,x,y):
-
+    print("phasing is " + str(phasing));
     if check_for_collision(canvas,x,y,'DOWN') == False:
         y+=10
         return y
@@ -119,7 +125,7 @@ def moveLeft(canvas,x,y):
 
 
 def moveRight(canvas,x,y):
-
+    print("phasing is " + str(phasing));
     if check_for_collision(canvas, x, y, 'RIGHT') == False:
         x+= 10
         return x
@@ -167,6 +173,8 @@ from pygame.locals import (
 
     QUIT,
 
+    K_1
+
 )
 
 pygame.init()
@@ -206,6 +214,7 @@ bomb = pygame.transform.scale(bomb,(50,50))
 #mine_coor = [(415,205),(265,215),(85,275),(35,405),(225,385),(345,95),(335,165)]
 mine_coor_b = []
 mine_coor_r = []
+
 
 #   101 -> E (jam mine)
 #   307 -> right alt (jam mine)
@@ -290,6 +299,13 @@ while running:
             running = False
 
         if event.type == KEYDOWN:
+            
+            #this is the phasing/walkthrough ability
+            if event.key == K_1:
+                phasing = True;
+                print("phasing is " + str(phasing));
+                timer = threading.Timer(4.0, setPhasingFalse);
+                timer.start();
             
             if event.key == K_UP:
                 y_pos_b = moveUp(image,x_pos_b,y_pos_b)
