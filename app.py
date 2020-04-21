@@ -14,6 +14,60 @@ def check_for_mine(mine_coor, x, y):
     # The following for loop will iterate through
     for item in mine_coor:
         if item == (x,y):
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen, (255,0,0), (x,y), 15)
+            pygame.draw.circle(screen, (250,250,0), (x,y), 10)
+            pygame.display.flip()
+
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen, (255,0,0), (x,y), 20)
+            pygame.draw.circle(screen, (250,250,0), (x,y), 10)
+            pygame.display.flip()
+
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen, (255,0,0), (x,y), 25)
+            pygame.draw.circle(screen, (250,250,0), (x,y), 15)
+            pygame.display.flip()
+
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen, (255,0,0), (x,y), 30)
+            pygame.draw.circle(screen, (250,250,0), (x,y), 20)
+            pygame.display.flip()
+
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen, (255,0,0), (x,y), 35)
+            pygame.draw.circle(screen, (250,250,0), (x,y), 25)
+            pygame.display.flip()
+            
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen, (255,0,0), (x,y), 30)
+            pygame.draw.circle(screen, (250,250,0), (x,y), 20)
+            pygame.display.flip()
+
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen, (255,0,0), (x,y), 25)
+            pygame.draw.circle(screen, (250,250,0), (x,y), 15)
+            pygame.display.flip()
+
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen, (255,0,0), (x,y), 15)
+            pygame.draw.circle(screen, (250,250,0), (x,y), 10)
+            pygame.display.flip()
+
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen,(0,0,0),(x,y),10) 
+            pygame.draw.circle(screen, (0,0,0), (x,y), 10)
+            pygame.display.flip()
+
             playsound('explosion.wav')
             return True
 
@@ -435,7 +489,10 @@ while running:
     #print("Circle Position: ",(x_pos_b,y_pos_b))
     
     if check_for_mine(mine_coor_r,x_pos_b,y_pos_b) == True:
-        screen.blit(bomb,(x_pos_b-10,y_pos_b-10))
+        #screen.blit(bomb,(x_pos_b-10,y_pos_b-10))
+        pygame.draw.circle(screen, (0,0,0), (x_pos_b,y_pos_b), 15)
+        pygame.draw.circle(screen, (255,0,0), (x_pos_b,y_pos_b), 5)
+        pygame.display.flip()
         print("Blue lost")
         screen.fill((255,255,255))
         screen.blit(redwin,(0,0))
@@ -443,6 +500,9 @@ while running:
         break
 
     if check_for_mine(mine_coor_b, x_pos_r, y_pos_r) == True:
+        pygame.draw.circle(screen, (0,0,0), (x_pos_r,y_pos_r), 15)
+        pygame.draw.circle(screen, (255,0,0), (x_pos_r,y_pos_r), 5)
+        pygame.display.flip()
         print("Red lost")
         screen.fill((255,255,255))
         screen.blit(bluewin,(0,0))
