@@ -13,6 +13,10 @@ def check_for_mine(mine_coor, x, y):
 
     # The following for loop will iterate through
     for item in mine_coor:
+        
+        if (item[0] - x) <= 50 and (item[1] - y) <= 50:
+            playsound('tick.wav')
+
         if item == (x,y):
             pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
             pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
@@ -399,10 +403,12 @@ while running:
             
             # X was pressed 
             if event.key == 120:
+                playsound('mine-deployed.wav')
                 mine_coor_r.append((x_pos_r,y_pos_r))
             
             # Right Control key was presssed
             if event.key == 305:
+                playsound('mine-deployed.wav')
                 mine_coor_b.append((x_pos_b,y_pos_b))
             
 
