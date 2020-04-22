@@ -14,8 +14,8 @@ def check_for_mine(mine_coor, x, y):
     # The following for loop will iterate through
     for item in mine_coor:
         
-        if (item[0] - x) <= 25 and (item[1] - y) <= 25:
-            playsound('tick.wav')
+#        if (item[0] - x) <= 25 and (item[1] - y) <= 25:
+#            playsound('tick.wav')
 
         if item == (x,y):
             pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
