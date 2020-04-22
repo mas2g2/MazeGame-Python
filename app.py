@@ -14,7 +14,7 @@ def check_for_mine(mine_coor, x, y):
     # The following for loop will iterate through
     for item in mine_coor:
         
-        if (item[0] - x) <= 50 and (item[1] - y) <= 50:
+        if (item[0] - x) <= 25 and (item[1] - y) <= 25:
             playsound('tick.wav')
 
         if item == (x,y):
