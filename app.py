@@ -89,13 +89,13 @@ def check_for_mine(mine_coor, x, y):
 
 # This function checks for and deactivates the mines of another player
 def check_perimeter_for_mine(mine_coor, x, y):
-    perimeter = [(x-10,y), (x+10,y), (x,y-10), (x,y+10), (x-10,y-10), (x+10,y-10), (x-10,y+10),(x+10,y+10)]
+    perimeter = [(x-25,y), (x+25,y), (x,y-25), (x,y+25), (x-25,y-25), (x+25,y-25), (x-25,y+25),(x+25,y+25)]
     deactivate_mines = []
     for coor in perimeter:
         for item in mine_coor:
-            if coor == item:
-                deactivate_mines.append(coor)
-                mine_coor.remove(coor)
+            if (coor[0] - item[0]) <= 25 and (coor[1] - item[1]) <= 25:
+                deactivate_mines.append(item)
+                mine_coor.remove(item)
     return deactivate_mines
 
 
