@@ -7,13 +7,79 @@ phasing = False;
 phaseStart = 0;
 phasingReady = True;
 
-# This function will be used to checck if the player is currently steping on a mine
+
+#variables for the shoot ability
+projectile = False;
+shootReady = True;
+shootStart = 0;
+clickX = 0;
+clickY = 0;
+slopeX = 0;
+slopeY = 0;
+projX = 0
+projY = 0
+
+# This function will be used to checck if the player is currently stepping on a mine
 
 def check_for_mine(mine_coor, x, y):
 
     # The following for loop will iterate through
     for item in mine_coor:
         if item == (x,y):
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen, (255,0,0), (x,y), 15)
+            pygame.draw.circle(screen, (250,250,0), (x,y), 10)
+            pygame.display.flip()
+
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen, (255,0,0), (x,y), 20)
+            pygame.draw.circle(screen, (250,250,0), (x,y), 10)
+            pygame.display.flip()
+
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen, (255,0,0), (x,y), 25)
+            pygame.draw.circle(screen, (250,250,0), (x,y), 15)
+            pygame.display.flip()
+
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen, (255,0,0), (x,y), 30)
+            pygame.draw.circle(screen, (250,250,0), (x,y), 20)
+            pygame.display.flip()
+
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen, (255,0,0), (x,y), 35)
+            pygame.draw.circle(screen, (250,250,0), (x,y), 25)
+            pygame.display.flip()
+            
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen, (255,0,0), (x,y), 30)
+            pygame.draw.circle(screen, (250,250,0), (x,y), 20)
+            pygame.display.flip()
+
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen, (255,0,0), (x,y), 25)
+            pygame.draw.circle(screen, (250,250,0), (x,y), 15)
+            pygame.display.flip()
+
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen, (255,0,0), (x,y), 15)
+            pygame.draw.circle(screen, (250,250,0), (x,y), 10)
+            pygame.display.flip()
+
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen,(0,0,0),(x,y),10) 
+            pygame.draw.circle(screen, (0,0,0), (x,y), 10)
+            pygame.display.flip()
+
             playsound('explosion.wav')
             return True
 
@@ -73,10 +139,24 @@ def check_for_collision(canvas,x,y,direction):
             return False
         else:
             return True
-
-
-
-
+        
+        
+        
+        #checks if player is hit by a laser, can be hit by your own laser
+def checkPlayerLaserCollision(canvas,x,y):
+    #this shitstorm checks if the entire radius of the laser hits something, otherwise a fast laser could just go through walls
+    for i in range(8):
+        if canvas.get_at((int(x) + i,int(y) +i)) == (0,255,0) or canvas.get_at((int(x) - i,int(y) +i)) == (0,255,0) or canvas.get_at((int(x) + i,int(y) -i)) == (0,255,0) or canvas.get_at((int(x) - i,int(y) -i)) == (0,255,0) and phasing == False:
+            return True#if laser hits a player
+    return False#if laser does not hit a player
+       
+        #check if laser hits a wall
+def checkLaserWallCollision(canvas,x,y):
+    #this shitstorm checks if the entire radius of the laser hits something, otherwise a fast laser could just go through walls
+    for i in range(8): #this makes an x around the laser center
+        if canvas.get_at((int(x) + i,int(y) +i)) == (0,0,0) or canvas.get_at((int(x) - i,int(y) +i)) == (0,0,0) or canvas.get_at((int(x) + i,int(y) -i)) == (0,0,0) or canvas.get_at((int(x) - i,int(y) -i)) == (0,0,0):
+            return True#if laser hits a wall
+    return False
 
 
 
@@ -139,10 +219,8 @@ def moveRight(canvas,x,y):
         return x
 
 
-
-
-
-
+#def shootLaser(playerX, playerY, laserX, laserY):
+    
 
 
 
@@ -211,6 +289,8 @@ redwin = pygame.image.load('redwins.png');
 redwin = pygame.transform.scale(redwin,(500,500))
 bluewin = pygame.image.load('bluewins.png')
 bluewin = pygame.transform.scale(bluewin,(500,500))
+
+laser = pygame.image.load('laser.png');
 
 bomb = pygame.image.load('bombs/bomb1.jpeg')
 bomb = pygame.transform.scale(bomb,(50,50))
@@ -285,12 +365,16 @@ red_deactivated = False
 blue_deactivated = False
 mine  = []
 
+
+#update function
 while running:
     elapsed = time.time() - start    
     # Check for collision
 
 
     # Did the user click the window close button?
+    
+   
 
     for event in pygame.event.get():
         
@@ -303,13 +387,33 @@ while running:
         if event.type == pygame.QUIT:
 
             running = False
-
+        if event.type == pygame.MOUSEBUTTONDOWN and shootReady == True:
+            if event.button == 1:
+                projectile = True;
+                clickX, clickY = pygame.mouse.get_pos();
+                print(clickX)
+                print(clickY)
+                #x and y slope vars
+                slopeX = (clickX - x_pos_b)/20
+                slopeY = (clickY - y_pos_b)/20
+                #position of the projectile
+                projX = x_pos_b + (slopeX / 20)
+                projY = y_pos_b + (slopeY / 20)
+                
+                pygame.draw.circle(screen, (0,255,0), (int(clickX), int(clickY)),10)
+                #pygame.draw.circle(screen, (0,255,0), (int(projX), int(projY)),5)
+                
+            
         if event.type == KEYDOWN:
+            
             
             #this is the phasing/walkthrough ability
             if event.key == K_1 and phasingReady == True:
                 phasing = True;
                 phasingReady = False;
+                
+                #this is a balancing decision so youy cant phase and shoot at the same time
+                shootReady = False;
                 phaseStart = elapsed;
                 print("phasing is " + str(phasing));
             
@@ -398,6 +502,7 @@ while running:
     #here we will reset the phasing variable so you cant just walk through walls all day
     if elapsed >= phaseStart + 1:
         phasing = False;
+        shootReady = True;
         
     #cooldown timer for phasing
     if elapsed >= phaseStart + 5:
@@ -435,7 +540,10 @@ while running:
     #print("Circle Position: ",(x_pos_b,y_pos_b))
     
     if check_for_mine(mine_coor_r,x_pos_b,y_pos_b) == True:
-        screen.blit(bomb,(x_pos_b-10,y_pos_b-10))
+        #screen.blit(bomb,(x_pos_b-10,y_pos_b-10))
+        pygame.draw.circle(screen, (0,0,0), (x_pos_b,y_pos_b), 15)
+        pygame.draw.circle(screen, (255,0,0), (x_pos_b,y_pos_b), 5)
+        pygame.display.flip()
         print("Blue lost")
         screen.fill((255,255,255))
         screen.blit(redwin,(0,0))
@@ -443,6 +551,9 @@ while running:
         break
 
     if check_for_mine(mine_coor_b, x_pos_r, y_pos_r) == True:
+        pygame.draw.circle(screen, (0,0,0), (x_pos_r,y_pos_r), 15)
+        pygame.draw.circle(screen, (255,0,0), (x_pos_r,y_pos_r), 5)
+        pygame.display.flip()
         print("Red lost")
         screen.fill((255,255,255))
         screen.blit(bluewin,(0,0))
@@ -466,8 +577,33 @@ while running:
         screen.blit(redwin,(0,0))
         pygame.display.update()
         break
-
-
+    
+    #was red shot by a laser?   
+    if checkPlayerLaserCollision(screen,x_pos_r,y_pos_r) == True:
+       print("Blue won!");
+       playsound('win.wav')
+       screen.fill((255,255,255))
+       screen.blit(bluewin,(0,0))
+       pygame.display.update()
+       break
+       
+       #was blue shot by a laser?   
+    if checkPlayerLaserCollision(screen,x_pos_b,y_pos_b) == True:
+       print("Red won!");
+       playsound('win.wav')
+       screen.fill((255,255,255))
+       screen.blit(redwin,(0,0))
+       pygame.display.update()
+       break
+    
+     #here im making a loop that will move the projectile a certain amount
+    #per frame, then let the rest of the frame execute
+    if(projectile == True) and checkLaserWallCollision(screen,projX,projY) == False:
+        #move the projectile in the direction the user clicked
+        pygame.draw.circle(screen, (0,255,0), (int(projX), int(projY)),7)
+        projX = projX + slopeX
+        projY = projY + slopeY
+    
     pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),10)
     pygame.draw.circle(screen, (255, 0, 0), (x_pos_r, y_pos_r), 10)
 
