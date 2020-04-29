@@ -1,7 +1,7 @@
 from playsound import playsound
 import time
 import threading
-<<<<<<< HEAD
+
 import random
 
 circle_radius = 10
@@ -13,11 +13,11 @@ elif map_index == 1:
     image_file = 'maze2.png'
 elif map_index == 2:
     image_file = 'maz3.png'
-=======
+
 import socket
 #from network import Network
 
->>>>>>> 1be005ffab8ad7851478aa2fc7dee14bdbe35a1d
+
 
 #I'm using this to define the walkthrough ability
 phasing = False;
@@ -662,12 +662,11 @@ while running:
 
 
 
-<<<<<<< HEAD
+
     if y_pos_b >= blue_goal:
-=======
-    if y_pos_b >= 445:
+
         print("Blue escaped")
->>>>>>> 1be005ffab8ad7851478aa2fc7dee14bdbe35a1d
+
         print("Blue won!");
         playsound('win.wav')
         screen.fill((255,255,255))
@@ -675,12 +674,11 @@ while running:
         pygame.display.update()
         break
 
-<<<<<<< HEAD
+
     if y_pos_r <= red_goal:
-=======
-    if y_pos_r <= 15:
+
         print("Red escaped")
->>>>>>> 1be005ffab8ad7851478aa2fc7dee14bdbe35a1d
+
         print("Red won!")
         playsound('win.wav')
         screen.fill((255,255,255))
