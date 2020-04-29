@@ -1,6 +1,8 @@
 from playsound import playsound
 import time
 import threading
+import socket
+#from network import Network
 
 #I'm using this to define the walkthrough ability
 phasing = False;
@@ -18,6 +20,37 @@ slopeX = 0;
 slopeY = 0;
 projX = 0
 projY = 0
+
+
+
+
+class Network:
+    def __init__(self):
+        self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.server = socket.gethostbyname(socket.gethostname())
+        self.port = 5555
+        self.addr = (self.server, self.port)
+        self.id = self.connect()
+        print(self.id)
+
+    def connect(self):
+        try:
+            self.client.connect(self.addr)
+            return self.client.recv(2048).decode()
+        except:
+            pass
+
+    def send(self, data):
+        try:
+            self.client.send(str.encode(data))
+            return self.client.recv(2048).decode()
+        except socket.error as e:
+            print(e)
+
+
+n = Network()
+print(n.send("Client connected at " + str(n.server)))
+
 
 # This function will be used to checck if the player is currently stepping on a mine
 
@@ -170,7 +203,7 @@ def checkLaserWallCollision(canvas,x,y):
 
 
 def moveUp(canvas,x,y):
-    print("phasing is " + str(phasing));
+    #print("phasing is " + str(phasing));
     if check_for_collision(canvas,x,y,'UP') == False:
         y -= 4;        
         return y
@@ -187,7 +220,7 @@ def moveUp(canvas,x,y):
 
 
 def moveDown(canvas,x,y):
-    print("phasing is " + str(phasing));
+    #print("phasing is " + str(phasing));
     if check_for_collision(canvas,x,y,'DOWN') == False:
         y+=4
         return y
@@ -218,7 +251,7 @@ def moveLeft(canvas,x,y):
 
 
 def moveRight(canvas,x,y):
-    print("phasing is " + str(phasing));
+    #print("phasing is " + str(phasing));
     if check_for_collision(canvas, x, y, 'RIGHT') == False:
         x+= 4
         return x
@@ -296,8 +329,6 @@ redwin = pygame.image.load('redwins.png');
 redwin = pygame.transform.scale(redwin,(500,500))
 bluewin = pygame.image.load('bluewins.png')
 bluewin = pygame.transform.scale(bluewin,(500,500))
-
-#laser = pygame.image.load('laser.png');
 
 bomb = pygame.image.load('bombs/bomb1.jpeg')
 bomb = pygame.transform.scale(bomb,(50,50))
@@ -388,6 +419,7 @@ while running:
         y_pos_b = moveUp(image,x_pos_b,y_pos_b)
         pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),10)
         
+        
     if keysPressed[pygame.K_DOWN]:
         y_pos_b = moveDown(image,x_pos_b,y_pos_b)
         pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),10)
@@ -399,8 +431,7 @@ while running:
     if keysPressed[pygame.K_RIGHT]:
         x_pos_b = moveRight(image,x_pos_b,y_pos_b)
         pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),10)
-        
-        
+            
     for event in pygame.event.get():
         
         # When the user clicks the close button
@@ -412,6 +443,9 @@ while running:
         if event.type == pygame.QUIT:
 
             running = False
+            
+            
+            
         if event.type == pygame.MOUSEBUTTONDOWN and shootReady == True:
             if event.button == 1:
                 projectile = True;
