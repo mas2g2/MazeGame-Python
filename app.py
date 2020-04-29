@@ -1,6 +1,17 @@
 from playsound import playsound
 import time
 import threading
+import random
+
+circle_radius = 10
+map_index = random.randint(0,2)
+
+if map_index == 0:
+    image_file = 'maze.png'
+elif map_index == 1:
+    image_file = 'maze2.png'
+elif map_index == 2:
+    image_file = 'maz3.png'
 
 #I'm using this to define the walkthrough ability
 phasing = False;
@@ -18,56 +29,56 @@ def check_for_mine(mine_coor, x, y):
 #            playsound('tick.wav')
 
         if item == (x,y):
-            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
-            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
-            pygame.draw.circle(screen, (255,0,0), (x,y), 15)
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),circle_radius)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),circle_radius)
+            pygame.draw.circle(screen, (255,0,0), (x,y), 10)
             pygame.draw.circle(screen, (250,250,0), (x,y), 10)
             pygame.display.flip()
 
-            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
-            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),circle_radius)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),circle_radius)
             pygame.draw.circle(screen, (255,0,0), (x,y), 20)
             pygame.draw.circle(screen, (250,250,0), (x,y), 10)
             pygame.display.flip()
 
-            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
-            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),circle_radius)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),circle_radius)
             pygame.draw.circle(screen, (255,0,0), (x,y), 25)
             pygame.draw.circle(screen, (250,250,0), (x,y), 15)
             pygame.display.flip()
 
-            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
-            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),circle_radius)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),circle_radius)
             pygame.draw.circle(screen, (255,0,0), (x,y), 30)
             pygame.draw.circle(screen, (250,250,0), (x,y), 20)
             pygame.display.flip()
 
-            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
-            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),circle_radius)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),circle_radius)
             pygame.draw.circle(screen, (255,0,0), (x,y), 35)
             pygame.draw.circle(screen, (250,250,0), (x,y), 25)
             pygame.display.flip()
             
-            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
-            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),circle_radius)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),circle_radius)
             pygame.draw.circle(screen, (255,0,0), (x,y), 30)
             pygame.draw.circle(screen, (250,250,0), (x,y), 20)
             pygame.display.flip()
 
-            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
-            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),circle_radius)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),circle_radius)
             pygame.draw.circle(screen, (255,0,0), (x,y), 25)
             pygame.draw.circle(screen, (250,250,0), (x,y), 15)
             pygame.display.flip()
 
-            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
-            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),circle_radius)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),circle_radius)
             pygame.draw.circle(screen, (255,0,0), (x,y), 15)
             pygame.draw.circle(screen, (250,250,0), (x,y), 10)
             pygame.display.flip()
 
-            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),10)
-            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),10)
+            pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),circle_radius)
+            pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),circle_radius)
             pygame.draw.circle(screen,(0,0,0),(x,y),10) 
             pygame.draw.circle(screen, (0,0,0), (x,y), 10)
             pygame.display.flip()
@@ -244,9 +255,9 @@ from pygame.locals import (
 pygame.init()
 
 # Object pos
-
 x_pos_b,y_pos_b = 415,15
 x_pos_r,y_pos_r = 75,425
+
 
 # object position change in case of key stroke event
 delta_x, delta_y = 10,10
@@ -260,7 +271,10 @@ collision = False
 screen = pygame.display.set_mode([500, 500])
 
 # create a surface object, image is drawn on it
-image = pygame.image.load(r'maze.png');
+
+
+
+image = pygame.image.load(image_file);
 image = pygame.transform.scale(image,(500,500))
 
 # win/lose screen
@@ -294,34 +308,52 @@ wasd = [119,115,97,100]
 
 
 # Setting color at a given pixel where collision was not being detected
+if image_file == 'maze.png':
+    x_pos_b,y_pos_b = 415,15
+    x_pos_r,y_pos_r = 75,425
+    red_goal = 10
+    blue_goal = 430
 
-x = 215
+    x = 215
 
-while x <= 315:
-    image.set_at((x,275),(0,0,255,0))
-    x += 10
+    while x <= 315:
+        image.set_at((x,275),(0,0,0,0))
+        x += 10
 
-x = 315
+    x = 315
 
-while x <= 435:
-    image.set_at((x,365),(0,0,255,0))
-    x+= 10
+    while x <= 435:
+        image.set_at((x,365),(0,0,0,0))
+        x+= 10
 
 
-x = 315
-while x <= 375:
-    image.set_at((x,315),(0,0,255,0))
-    x += 10
+    x = 315
+    while x <= 375:
+        image.set_at((x,315),(0,0,0,0))
+        x += 10
 
-x= 55
-while x <= 115:
-    image.set_at((x,215),(0,0,255,0))
-    x+= 10
+    x= 55
+    while x <= 115:
+        image.set_at((x,215),(0,0,0,0))
+        x+= 10
 
-x = 445
-while x <= 485:
-    image.set_at((x,315),(0,0,255,0))
-    x+=10
+    x = 445
+    while x <= 485:
+        image.set_at((x,315),(0,0,0,0))
+        x+=10
+elif image_file == "maze2.png":
+    x_pos_b, y_pos_b = 225,15
+
+    red_goal = 10
+    x_pos_r, y_pos_r = 345,475 
+    blue_goal = 480
+
+elif image_file == 'maz3.png':
+    x_pos_r, y_pos_r = 75,485
+    x_pos_b,y_po_b = 375,25
+    red_goal = 5
+    blue_goal = 490
+    circle_radius = 7
 # Run until the user asks to quit
 
 # Here we will have a boolean variable which will be used 
@@ -347,7 +379,7 @@ while running:
     elapsed = time.time() - start    
     # Check for collision
 
-
+    print(x_pos_b,y_pos_b)
     # Did the user click the window close button?
 
     for event in pygame.event.get():
@@ -373,20 +405,20 @@ while running:
             
             if event.key == K_UP:
                 y_pos_b = moveUp(image,x_pos_b,y_pos_b)
-                pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),10)
+                pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),circle_radius)
 
 
             if event.key == K_DOWN:
                 y_pos_b = moveDown(image,x_pos_b,y_pos_b) 
-                pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),10)
+                pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),circle_radius)
 
             if event.key == K_RIGHT:
                 x_pos_b = moveRight(image, x_pos_b, y_pos_b)
-                pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),10)
+                pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),circle_radius)
 
             if event.key == K_LEFT:
                 x_pos_b = moveLeft(image, x_pos_b,y_pos_b)
-                pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),10)
+                pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),circle_radius)
         
             
             if event.key == 119:
@@ -517,7 +549,7 @@ while running:
 
 
 
-    if y_pos_b >= 445:
+    if y_pos_b >= blue_goal:
         print("Blue won!");
         playsound('win.wav')
         screen.fill((255,255,255))
@@ -525,7 +557,7 @@ while running:
         pygame.display.update()
         break
 
-    if y_pos_r <= 15:
+    if y_pos_r <= red_goal:
         print("Red won!")
         playsound('win.wav')
         screen.fill((255,255,255))
@@ -534,8 +566,8 @@ while running:
         break
 
 
-    pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),10)
-    pygame.draw.circle(screen, (255, 0, 0), (x_pos_r, y_pos_r), 10)
+    pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),circle_radius)
+    pygame.draw.circle(screen, (255, 0, 0), (x_pos_r, y_pos_r), circle_radius)
 
     # Flip the display, updates content in display
 
