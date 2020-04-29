@@ -153,8 +153,10 @@ def checkPlayerLaserCollision(canvas,x,y):
         #check if laser hits a wall
 def checkLaserWallCollision(canvas,x,y):
     #this shitstorm checks if the entire radius of the laser hits something, otherwise a fast laser could just go through walls
-    for i in range(8): #this makes an x around the laser center
+    hit = 0
+    for i in range(5): #this makes an x around the laser center
         if canvas.get_at((int(x) + i,int(y) +i)) == (0,0,0) or canvas.get_at((int(x) - i,int(y) +i)) == (0,0,0) or canvas.get_at((int(x) + i,int(y) -i)) == (0,0,0) or canvas.get_at((int(x) - i,int(y) -i)) == (0,0,0):
+            print("laser collided at " + str(x) + " and " +str(y))
             return True#if laser hits a wall
     return False
 
@@ -165,7 +167,7 @@ def checkLaserWallCollision(canvas,x,y):
 def moveUp(canvas,x,y):
     print("phasing is " + str(phasing));
     if check_for_collision(canvas,x,y,'UP') == False:
-        y -= 10;        
+        y -= 4;        
         return y
 
     else:
@@ -182,7 +184,7 @@ def moveUp(canvas,x,y):
 def moveDown(canvas,x,y):
     print("phasing is " + str(phasing));
     if check_for_collision(canvas,x,y,'DOWN') == False:
-        y+=10
+        y+=4
         return y
     else:
         return y
@@ -198,7 +200,7 @@ def moveDown(canvas,x,y):
 def moveLeft(canvas,x,y):
 
     if check_for_collision(canvas, x, y, 'LEFT') == False:
-        x-=10
+        x-=4
         return x
     else:
         return x
@@ -213,7 +215,7 @@ def moveLeft(canvas,x,y):
 def moveRight(canvas,x,y):
     print("phasing is " + str(phasing));
     if check_for_collision(canvas, x, y, 'RIGHT') == False:
-        x+= 10
+        x+= 4
         return x
     else:
         return x
@@ -290,7 +292,7 @@ redwin = pygame.transform.scale(redwin,(500,500))
 bluewin = pygame.image.load('bluewins.png')
 bluewin = pygame.transform.scale(bluewin,(500,500))
 
-laser = pygame.image.load('laser.png');
+#laser = pygame.image.load('laser.png');
 
 bomb = pygame.image.load('bombs/bomb1.jpeg')
 bomb = pygame.transform.scale(bomb,(50,50))
@@ -374,8 +376,26 @@ while running:
 
     # Did the user click the window close button?
     
-   
-
+    #this will be able to check if the user is holding a key to move
+    keysPressed = pygame.key.get_pressed()
+    
+    if keysPressed[pygame.K_UP]:
+        y_pos_b = moveUp(image,x_pos_b,y_pos_b)
+        pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),10)
+        
+    if keysPressed[pygame.K_DOWN]:
+        y_pos_b = moveDown(image,x_pos_b,y_pos_b)
+        pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),10)
+        
+    if keysPressed[pygame.K_LEFT]:
+        x_pos_b = moveLeft(image,x_pos_b,y_pos_b)
+        pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),10)
+    
+    if keysPressed[pygame.K_RIGHT]:
+        x_pos_b = moveRight(image,x_pos_b,y_pos_b)
+        pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),10)
+        
+        
     for event in pygame.event.get():
         
         # When the user clicks the close button
@@ -391,8 +411,8 @@ while running:
             if event.button == 1:
                 projectile = True;
                 clickX, clickY = pygame.mouse.get_pos();
-                print(clickX)
-                print(clickY)
+                #print(clickX)
+                #print(clickY)
                 #x and y slope vars
                 slopeX = (clickX - x_pos_b)/20
                 slopeY = (clickY - y_pos_b)/20
@@ -454,7 +474,7 @@ while running:
             # Right Control key was presssed
             if event.key == 305:
                 mine_coor_b.append((x_pos_b,y_pos_b))
-            
+               
 
             # CHeck if red player pressed E,
             # He will deactivate the mines deployed by blue 
@@ -483,6 +503,8 @@ while running:
                      
                     old_elapsed = elapsed
                     print(old_elapsed)
+            #this is the end of the event for loop        
+                    
 
     # Here we will reactivate mines that were deactivated 5 seconds ago
     if elapsed >= old_elapsed+5 and old_elapsed != 0:
@@ -598,9 +620,9 @@ while running:
     
      #here im making a loop that will move the projectile a certain amount
     #per frame, then let the rest of the frame execute
-    if(projectile == True) and checkLaserWallCollision(screen,projX,projY) == False:
+    if(projectile == True) and checkLaserWallCollision(screen,projX+slopeX,projY+slopeY) == False:
         #move the projectile in the direction the user clicked
-        pygame.draw.circle(screen, (0,255,0), (int(projX), int(projY)),7)
+        pygame.draw.circle(screen, (0,255,0), (int(projX), int(projY)),7)#checking if I will hit a wall if the laser keeps going
         projX = projX + slopeX
         projY = projY + slopeY
     
