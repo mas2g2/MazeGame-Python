@@ -17,7 +17,6 @@ def check_for_mine(mine_coor, x, y):
 
 
 
-
 # This function checks for and deactivates the mines of another player
 def check_perimeter_for_mine(mine_coor, x, y):
     perimeter = [(x-10,y), (x+10,y), (x,y-10), (x,y+10), (x-10,y-10), (x+10,y-10), (x-10,y+10),(x+10,y+10)]
@@ -127,16 +126,6 @@ def moveRight(canvas,x,y):
     else:
         return x
 
-
-
-
-def read_pos(str):
-    str = str.split(",")
-    return int(str[0]), int(str[1])
-
-
-def make_pos(tup):
-    return str(tup[0]) + "," + str(tup[1])
 
 
 # The following code was obtained from the URL:
@@ -263,7 +252,8 @@ while x <= 485:
 # for the condition that will keep our while loop running
 
 running = True
-
+n = Network()
+startPos = n.getPos()
 # Boolean variable to check for collision
 
 collision = False
@@ -278,18 +268,10 @@ red_deactivated = False
 blue_deactivated = False
 mine  = []
 
-n = Network()
-startPos = read_pos(n.getPos())
-
-
 while running:
     elapsed = time.time() - start    
     # Check for collision
 
-    p2Pos = read_pos(n.send(make_pos((x_pos_b, y_pos_b))))
-
-    x_pos_b = p2Pos[0]
-    y_pos_b = p2Pos[1]
     # Did the user click the window close button?
 
     for event in pygame.event.get():
