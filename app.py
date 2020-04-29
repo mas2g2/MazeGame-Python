@@ -1,5 +1,6 @@
 from playsound import playsound
 import time
+from network import Network
 
 # This function will be used to checck if the player is currently steping on a mine
 
@@ -129,11 +130,13 @@ def moveRight(canvas,x,y):
 
 
 
+def read_pos(str):
+    str = str.split(",")
+    return int(str[0]), int(str[1])
 
 
-
-
-
+def make_pos(tup):
+    return str(tup[0]) + "," + str(tup[1])
 
 
 # The following code was obtained from the URL:
@@ -145,6 +148,11 @@ def moveRight(canvas,x,y):
 # Import and initialize the pygame library
 
 import pygame
+import socket
+import select
+import sys
+
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Import pygame.locals for easier access to key coordinates
 
@@ -173,8 +181,8 @@ pygame.init()
 
 # Object pos
 
-x_pos_b,y_pos_b = 415,15
-x_pos_r,y_pos_r = 75,425
+x_pos_b,y_pos_b = 415, 15
+x_pos_r,y_pos_r = 75, 425
 
 # object position change in case of key stroke event
 delta_x, delta_y = 10,10
@@ -270,11 +278,18 @@ red_deactivated = False
 blue_deactivated = False
 mine  = []
 
+n = Network()
+startPos = read_pos(n.getPos())
+
+
 while running:
     elapsed = time.time() - start    
     # Check for collision
 
+    p2Pos = read_pos(n.send(make_pos((x_pos_b, y_pos_b))))
 
+    x_pos_b = p2Pos[0]
+    y_pos_b = p2Pos[1]
     # Did the user click the window close button?
 
     for event in pygame.event.get():
@@ -383,8 +398,6 @@ while running:
     # Fill the background with white
     # This is done by setting all of our RGB
     # values to 255
-
-    screen.fill((255, 255, 255))
 
     # Copying the image surface
     # to display surface object at
