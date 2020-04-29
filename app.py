@@ -141,13 +141,18 @@ def check_for_collision(canvas,x,y,direction):
             return True
         
         
-        
+def distance(x1,y1,x2,y2):
+    slope = abs((y2-y1)/(x2-x1));
+    return slope;
         #checks if player is hit by a laser, can be hit by your own laser
-def checkPlayerLaserCollision(canvas,x,y):
-    #this shitstorm checks if the entire radius of the laser hits something, otherwise a fast laser could just go through walls
-    for i in range(8):
-        if canvas.get_at((int(x) + i,int(y) +i)) == (0,255,0) or canvas.get_at((int(x) - i,int(y) +i)) == (0,255,0) or canvas.get_at((int(x) + i,int(y) -i)) == (0,255,0) or canvas.get_at((int(x) - i,int(y) -i)) == (0,255,0) and phasing == False:
-            return True#if laser hits a player
+    
+def checkPlayerLaserCollision(canvas,projx,projy,pposX,pposY):
+    #this checks the distance between the laser and the player, could detect through walls but the objects would be too far apart
+    if distance(projx,projy,pposX,pposY) >= 7:
+        print(distance)
+        return True#if laser hits a player
+    
+    #print(distance)
     return False#if laser does not hit a player
        
         #check if laser hits a wall
@@ -601,7 +606,8 @@ while running:
         break
     
     #was red shot by a laser?   
-    if checkPlayerLaserCollision(screen,x_pos_r,y_pos_r) == True:
+    
+    if checkPlayerLaserCollision(screen,projX, projY, x_pos_r,y_pos_r) == True and projectile == True:
        print("Blue won!");
        playsound('win.wav')
        screen.fill((255,255,255))
@@ -610,7 +616,7 @@ while running:
        break
        
        #was blue shot by a laser?   
-    if checkPlayerLaserCollision(screen,x_pos_b,y_pos_b) == True:
+    if checkPlayerLaserCollision(screen,projX, projY,x_pos_b,y_pos_b) == True and projectile == True:
        print("Red won!");
        playsound('win.wav')
        screen.fill((255,255,255))
