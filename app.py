@@ -514,15 +514,15 @@ while running:
         pygame.draw.circle(screen, (255,0, 0), (x_pos_r, y_pos_r),10)
         
         
-    if keysPressed[pygame.K_w]:
+    if keysPressed[pygame.K_s]:
         y_pos_r = moveDown(image,x_pos_r,y_pos_r)
         pygame.draw.circle(screen, (255,0, 0), (x_pos_r, y_pos_r),10)
         
-    if keysPressed[pygame.K_w]:
+    if keysPressed[pygame.K_a]:
         x_pos_r = moveLeft(image,x_pos_r,y_pos_r)
         pygame.draw.circle(screen, (255,0, 0), (x_pos_r, y_pos_r),10)
     
-    if keysPressed[pygame.K_w]:
+    if keysPressed[pygame.K_d]:
         x_pos_r = moveRight(image,x_pos_r,y_pos_r)
         pygame.draw.circle(screen, (255,0, 0), (x_pos_r, y_pos_r),10)
     
