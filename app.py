@@ -322,8 +322,9 @@ from pygame.locals import (
     K_1
 
 )
-pygame.mixer.pre_init(44100, 16, 2, 4096)
 pygame.init()
+pygame.mixer.pre_init(44100, 16, 2, 4096)
+
 
 # Object pos
 x_pos_b,y_pos_b = 415,15
@@ -475,7 +476,7 @@ old_elapsed = 0
 red_deactivated = False
 blue_deactivated = False
 mine  = []
-pygame.mixer.music.load('Maze.mp3')
+pygame.mixer.music.load('Labyrinth.mp3')
 pygame.mixer.music.play(-1)
 #update function
 while running:
@@ -597,7 +598,7 @@ while running:
                     mine.append(item)
                 if mine != []:
                     old_elapsed = elapsed
-                    print(old_elapsed)
+                    #print(old_elapsed)
             
             # CHeck if blue player pressed right alt,
             # if so blue player will deactivate red player's mines for five
