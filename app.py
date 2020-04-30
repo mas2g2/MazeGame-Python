@@ -11,8 +11,6 @@ if map_index == 0:
     image_file = 'maze.png'
 elif map_index == 1:
     image_file = 'maze2.png'
-#elif map_index == 2:
-#    image_file = 'maz3.png'
 elif map_index == 2:
     image_file = 'Maze4.png'
 
