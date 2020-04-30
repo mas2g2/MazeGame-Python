@@ -211,7 +211,7 @@ def checkPlayerLaserCollision(canvas,projx,projy,pposX,pposY):
 def checkLaserWallCollision(canvas,x,y):
     #this shitstorm checks if the entire radius of the laser hits something, otherwise a fast laser could just go through walls
     #for i in range(5): #this makes an x around the laser center
-    if canvas.get_at((int(x),int(y))) == (255,255,255): #or canvas.get_at((int(x) - i,int(y) +i)) == (0,0,0) or canvas.get_at((int(x) + i,int(y) -i)) == (0,0,0) or canvas.get_at((int(x) - i,int(y) -i)) == (0,0,0):
+    if canvas.get_at((int(x),int(y))) == (255,255,255) or canvas.get_at((int(x),int(y))) == (255,0,0) or canvas.get_at((int(x),int(y))) == (0,0,255): #or canvas.get_at((int(x) - i,int(y) +i)) == (0,0,0) or canvas.get_at((int(x) + i,int(y) -i)) == (0,0,0) or canvas.get_at((int(x) - i,int(y) -i)) == (0,0,0):
             #print("laser collided at " + str(x) + " and " +str(y))
         return False#if laser hits a wall
     else:
