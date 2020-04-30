@@ -5,7 +5,7 @@ import threading
 import random
 
 circle_radius = 10
-map_index = random.randint(0,2)
+map_index = random.randint(0,3)
 
 if map_index == 0:
     image_file = 'maze.png'
@@ -13,6 +13,8 @@ elif map_index == 1:
     image_file = 'maze2.png'
 elif map_index == 2:
     image_file = 'maz3.png'
+elif map_index == 3:
+    image_file = 'Maze2.png'
 
 import socket
 #from network import Network
@@ -343,6 +345,7 @@ screen = pygame.display.set_mode([500, 500])
 
 
 
+
 image = pygame.image.load(image_file);
 image = pygame.transform.scale(image,(500,500))
 
@@ -434,12 +437,24 @@ elif image_file == 'maz3.png':
             image.set_at((x,y),(255,255,255))
             y+=1
         x +=1
-
+    
+    x = 150
+    y = 402
+    while y <= 411:
+        x = 150
+        while x <= 250:
+            image.set_at((x,y),(255,255,255))
+            x += 1
+        y += 1
     x_pos_r, y_pos_r = 75,485
     x_pos_b,y_po_b = 375,25
     red_goal = 5
     blue_goal = 490
     circle_radius = 7
+
+elif image_file == 'Maze2.png':
+    blue_goal = 492
+    red_goal =2
 # Run until the user asks to quit
 
 # Here we will have a boolean variable which will be used 
@@ -707,6 +722,7 @@ while running:
     #was red shot by a laser?   
     
     if checkPlayerLaserCollision(screen,projX, projY, x_pos_r,y_pos_r) == True and projectile == True:
+        pygame.mixer.music.stop()
         print("Blue lasered Red")
         print("Blue won!");
         playsound('win.wav')
