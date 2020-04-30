@@ -199,7 +199,7 @@ def distance(x1,y1,x2,y2):
 def checkPlayerLaserCollision(canvas,projx,projy,pposX,pposY):
     #this checks the distance between the laser and the player, could detect through walls but the objects would be too far apart
     if distance(abs(projx),abs(projy),abs(pposX),abs(pposY)) >= 5:
-        print(distance)
+        #print(distance)
         return True#if laser hits a player
     
     #print(distance)
@@ -211,7 +211,7 @@ def checkLaserWallCollision(canvas,x,y):
     hit = 0
     for i in range(5): #this makes an x around the laser center
         if canvas.get_at((int(x) + i,int(y) +i)) == (0,0,0) or canvas.get_at((int(x) - i,int(y) +i)) == (0,0,0) or canvas.get_at((int(x) + i,int(y) -i)) == (0,0,0) or canvas.get_at((int(x) - i,int(y) -i)) == (0,0,0):
-            print("laser collided at " + str(x) + " and " +str(y))
+            #print("laser collided at " + str(x) + " and " +str(y))
             return True#if laser hits a wall
     return False
 
@@ -221,7 +221,7 @@ def checkLaserWallCollision(canvas,x,y):
 
 
 def moveUp(canvas,x,y):
-    print("phasing is " + str(phasing));
+    #print("phasing is " + str(phasing));
     if check_for_collision(canvas,x,y,'UP') == False:
         y -= 3;        
         return y
@@ -238,7 +238,7 @@ def moveUp(canvas,x,y):
 
 
 def moveDown(canvas,x,y):
-    print("phasing is " + str(phasing));
+    #print("phasing is " + str(phasing));
     if check_for_collision(canvas,x,y,'DOWN') == False:
         y+=3
         return y
@@ -269,7 +269,7 @@ def moveLeft(canvas,x,y):
 
 
 def moveRight(canvas,x,y):
-    print("phasing is " + str(phasing));
+    #print("phasing is " + str(phasing));
     if check_for_collision(canvas, x, y, 'RIGHT') == False:
         x+= 3
         return x
@@ -481,7 +481,7 @@ while running:
     elapsed = time.time() - start    
     # Check for collision
 
-    print(x_pos_b,y_pos_b)
+    #print(x_pos_b,y_pos_b)
     # Did the user click the window close button?
 
     #this will be able to check if the user is holding a key to move
@@ -542,7 +542,7 @@ while running:
                 phasing = True;
                 phasingReady = False;
                 phaseStart = elapsed;
-                print("phasing is " + str(phasing));
+                #print("phasing is " + str(phasing));
             
             if event.key == K_UP:
                 y_pos_b = moveUp(image,x_pos_b,y_pos_b)
@@ -732,6 +732,7 @@ while running:
        
        #was blue shot by a laser?   
     if checkPlayerLaserCollision(screen,projX, projY,x_pos_b,y_pos_b) == True and projectile == True:
+        pygame.mixer.music.stop()
         print("Red lasered Blue")
         print("Red won!");
         playsound('win.wav')
