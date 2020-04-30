@@ -14,7 +14,7 @@ elif map_index == 1:
 elif map_index == 2:
     image_file = 'maz3.png'
 elif map_index == 3:
-    image_file = 'Maze2.png'
+    image_file = 'Maze4.png'
 
 import socket
 #from network import Network
@@ -452,7 +452,7 @@ elif image_file == 'maz3.png':
     blue_goal = 490
     circle_radius = 7
 
-elif image_file == 'Maze2.png':
+elif image_file == 'Maze4.png':
     blue_goal = 492
     red_goal =2
 # Run until the user asks to quit
