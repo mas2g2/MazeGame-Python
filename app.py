@@ -127,6 +127,15 @@ def moveRight(canvas,x,y):
         return x
 
 
+def read_pos(str):
+    str = str.split(",")
+    return int(str[0]), int(str[1])
+
+
+def make_pos(tup):
+    return str(tup[0]) + "," + str(tup[1])
+
+
 
 # The following code was obtained from the URL:
 
