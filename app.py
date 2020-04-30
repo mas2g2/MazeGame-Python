@@ -1,7 +1,7 @@
 from playsound import playsound
 import time
 import threading
-
+import math
 import random
 
 circle_radius = 10
@@ -72,7 +72,7 @@ def check_for_mine(mine_coor, x, y):
 #        if (item[0] - x) <= 25 and (item[1] - y) <= 25:
 #            playsound('tick.wav')
 
-        if item == (x,y):
+        if abs(item[0]-x) <= 10 and abs(item[1]-y) <= 10:
             pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),circle_radius)
             pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),circle_radius)
             pygame.draw.circle(screen, (255,0,0), (x,y), 10)
