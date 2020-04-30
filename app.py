@@ -460,11 +460,10 @@ old_elapsed = 0
 red_deactivated = False
 blue_deactivated = False
 mine  = []
-
+pygame.mixer.music.load('Maze.mp3')
+pygame.mixer.music.play(-1)
 #update function
 while running:
-    #pygame.mixer.music.load('Maze.wav')
-    #pygame.mixer.music.play(-1)
     elapsed = time.time() - start    
     # Check for collision
 
