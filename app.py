@@ -5,14 +5,14 @@ import threading
 import random
 
 circle_radius = 10
-map_index = random.randint(0,3)
+map_index = random.randint(0,2)
 
 if map_index == 0:
     image_file = 'maze.png'
 elif map_index == 1:
     image_file = 'maze2.png'
 elif map_index == 2:
-    image_file = 'maz3.png'
+    image_file = 'Maze4.png'
 elif map_index == 3:
     image_file = 'Maze4.png'
 
