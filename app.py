@@ -198,7 +198,7 @@ def distance(x1,y1,x2,y2):
     
 def checkPlayerLaserCollision(canvas,projx,projy,pposX,pposY):
     #this checks the distance between the laser and the player, could detect through walls but the objects would be too far apart
-    if distance(projx,projy,pposX,pposY) >= 7:
+    if distance(abs(projx),abs(projy),abs(pposX),abs(pposY)) >= 5:
         print(distance)
         return True#if laser hits a player
     
@@ -528,8 +528,8 @@ while running:
                 slopeX = (clickX - x_pos_b)/20
                 slopeY = (clickY - y_pos_b)/20
                 #position of the projectile
-                projX = x_pos_b + (slopeX / 20)
-                projY = y_pos_b + (slopeY / 20)
+                projX = x_pos_b + (slopeX / 10)
+                projY = y_pos_b + (slopeY / 10)
                 
                 pygame.draw.circle(screen, (0,255,0), (int(projX), int(projY)),10)
                 #pygame.draw.circle(screen, (0,255,0), (int(projX), int(projY)),5)    
