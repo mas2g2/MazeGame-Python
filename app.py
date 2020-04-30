@@ -320,7 +320,7 @@ from pygame.locals import (
     K_1
 
 )
-
+pygame.mixer.pre_init(44100, 16, 2, 4096)
 pygame.init()
 
 # Object pos
@@ -418,6 +418,23 @@ elif image_file == "maze2.png":
     blue_goal = 480
 
 elif image_file == 'maz3.png':
+
+    x = 33
+    y = 190
+
+    while y <= 261:
+        image.set_at((x,y),(255,255,255))
+        y+= 1
+
+    x = 174
+    y = 177
+    while x <= 184:
+        y = 177
+        while y <= 270:
+            image.set_at((x,y),(255,255,255))
+            y+=1
+        x +=1
+
     x_pos_r, y_pos_r = 75,485
     x_pos_b,y_po_b = 375,25
     red_goal = 5
@@ -446,6 +463,8 @@ mine  = []
 
 #update function
 while running:
+    #pygame.mixer.music.load('Maze.wav')
+    #pygame.mixer.music.play(-1)
     elapsed = time.time() - start    
     # Check for collision
 
