@@ -198,7 +198,7 @@ def distance(x1,y1,x2,y2):
     
 def checkPlayerLaserCollision(canvas,projx,projy,pposX,pposY):
     #this checks the distance between the laser and the player, could detect through walls but the objects would be too far apart
-    if distance(abs(projx),abs(projy),abs(pposX),abs(pposY)) >= 5:
+    if distance(abs(projx),abs(projy),abs(pposX),abs(pposY)) <= 5:
         #print(distance)
         return True#if laser hits a player
     
@@ -208,12 +208,12 @@ def checkPlayerLaserCollision(canvas,projx,projy,pposX,pposY):
         #check if laser hits a wall
 def checkLaserWallCollision(canvas,x,y):
     #this shitstorm checks if the entire radius of the laser hits something, otherwise a fast laser could just go through walls
-    hit = 0
-    for i in range(5): #this makes an x around the laser center
-        if canvas.get_at((int(x) + i,int(y) +i)) == (0,0,0) or canvas.get_at((int(x) - i,int(y) +i)) == (0,0,0) or canvas.get_at((int(x) + i,int(y) -i)) == (0,0,0) or canvas.get_at((int(x) - i,int(y) -i)) == (0,0,0):
+    #for i in range(5): #this makes an x around the laser center
+    if canvas.get_at((int(x),int(y))) == (255,255,255): #or canvas.get_at((int(x) - i,int(y) +i)) == (0,0,0) or canvas.get_at((int(x) + i,int(y) -i)) == (0,0,0) or canvas.get_at((int(x) - i,int(y) -i)) == (0,0,0):
             #print("laser collided at " + str(x) + " and " +str(y))
-            return True#if laser hits a wall
-    return False
+        return False#if laser hits a wall
+    else:
+        return False
 
 
 
@@ -527,9 +527,9 @@ while running:
                 #x and y slope vars
                 slopeX = (clickX - x_pos_b)/20
                 slopeY = (clickY - y_pos_b)/20
-                #position of the projectile
-                projX = x_pos_b + (slopeX / 10)
-                projY = y_pos_b + (slopeY / 10)
+                #position of the projectile, +5 ensures no collision with shooter
+                projX = x_pos_b + (slopeX / 20)+5
+                projY = y_pos_b + (slopeY / 20)+5
                 
                 pygame.draw.circle(screen, (0,255,0), (int(projX), int(projY)),10)
                 #pygame.draw.circle(screen, (0,255,0), (int(projX), int(projY)),5)    
