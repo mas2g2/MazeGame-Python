@@ -1,19 +1,17 @@
 from playsound import playsound
 import time
 import threading
-
+import math
 import random
 
 circle_radius = 10
-map_index = random.randint(0,3)
+map_index = random.randint(0,2)
 
 if map_index == 0:
     image_file = 'maze.png'
 elif map_index == 1:
     image_file = 'maze2.png'
 elif map_index == 2:
-    image_file = 'maz3.png'
-elif map_index == 3:
     image_file = 'Maze4.png'
 
 import socket
@@ -74,7 +72,7 @@ def check_for_mine(mine_coor, x, y):
 #        if (item[0] - x) <= 25 and (item[1] - y) <= 25:
 #            playsound('tick.wav')
 
-        if item == (x,y):
+        if abs(item[0]-x) <= 10 and abs(item[1]-y) <= 10:
             pygame.draw.circle(screen,(0,0,255),(x_pos_b, y_pos_b),circle_radius)
             pygame.draw.circle(screen, (255,0,0),(x_pos_r,y_pos_r),circle_radius)
             pygame.draw.circle(screen, (255,0,0), (x,y), 10)
@@ -194,14 +192,16 @@ def check_for_collision(canvas,x,y,direction):
 
 #give this 2 pts, it will return the distance between them
 def distance(x1,y1,x2,y2):
-    slope = abs((y2-y1)/(x2-x1));
-    return slope;
+    dist = math.sqrt( ((x2-x1)**2) + ((y2-y1)**2));
+    return dist;
         #checks if player is hit by a laser, can be hit by your own laser
     
 def checkPlayerLaserCollision(canvas,projx,projy,pposX,pposY):
     #this checks the distance between the laser and the player, could detect through walls but the objects would be too far apart
-    if distance(projx,projy,pposX,pposY) >= 7:
-        print(distance)
+    if distance(abs(projx),abs(projy),abs(pposX),abs(pposY)) <= 5:
+        #print(distance)
+        print("Player at " + str(abs(pposX)) + " "+str(abs(pposY)))
+        print("Killed by laser at " + str(abs(projx)) + " "+str(abs(projy)))
         return True#if laser hits a player
     
     #print(distance)
@@ -210,12 +210,12 @@ def checkPlayerLaserCollision(canvas,projx,projy,pposX,pposY):
         #check if laser hits a wall
 def checkLaserWallCollision(canvas,x,y):
     #this shitstorm checks if the entire radius of the laser hits something, otherwise a fast laser could just go through walls
-    hit = 0
-    for i in range(5): #this makes an x around the laser center
-        if canvas.get_at((int(x) + i,int(y) +i)) == (0,0,0) or canvas.get_at((int(x) - i,int(y) +i)) == (0,0,0) or canvas.get_at((int(x) + i,int(y) -i)) == (0,0,0) or canvas.get_at((int(x) - i,int(y) -i)) == (0,0,0):
-            print("laser collided at " + str(x) + " and " +str(y))
-            return True#if laser hits a wall
-    return False
+    #for i in range(5): #this makes an x around the laser center
+    if canvas.get_at((int(x),int(y))) == (255,255,255) or canvas.get_at((int(x),int(y))) == (255,0,0) or canvas.get_at((int(x),int(y))) == (0,0,255): #or canvas.get_at((int(x) - i,int(y) +i)) == (0,0,0) or canvas.get_at((int(x) + i,int(y) -i)) == (0,0,0) or canvas.get_at((int(x) - i,int(y) -i)) == (0,0,0):
+            #print("laser collided at " + str(x) + " and " +str(y))
+        return False#if laser hits a wall
+    else:
+        return True
 
 
 
@@ -223,7 +223,7 @@ def checkLaserWallCollision(canvas,x,y):
 
 
 def moveUp(canvas,x,y):
-    print("phasing is " + str(phasing));
+    #print("phasing is " + str(phasing));
     if check_for_collision(canvas,x,y,'UP') == False:
         y -= 3;        
         return y
@@ -240,7 +240,7 @@ def moveUp(canvas,x,y):
 
 
 def moveDown(canvas,x,y):
-    print("phasing is " + str(phasing));
+    #print("phasing is " + str(phasing));
     if check_for_collision(canvas,x,y,'DOWN') == False:
         y+=3
         return y
@@ -271,7 +271,7 @@ def moveLeft(canvas,x,y):
 
 
 def moveRight(canvas,x,y):
-    print("phasing is " + str(phasing));
+    #print("phasing is " + str(phasing));
     if check_for_collision(canvas, x, y, 'RIGHT') == False:
         x+= 3
         return x
@@ -483,7 +483,7 @@ while running:
     elapsed = time.time() - start    
     # Check for collision
 
-    print(x_pos_b,y_pos_b)
+    #print(x_pos_b,y_pos_b)
     # Did the user click the window close button?
 
     #this will be able to check if the user is holding a key to move
@@ -507,6 +507,27 @@ while running:
         pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),10)
         
         
+    #this will be able to check if the user is holding a key to move
+    #reds
+    if keysPressed[pygame.K_w]:
+        y_pos_r = moveUp(image,x_pos_r,y_pos_r)
+        pygame.draw.circle(screen, (255,0, 0), (x_pos_r, y_pos_r),10)
+        
+        
+    if keysPressed[pygame.K_w]:
+        y_pos_r = moveDown(image,x_pos_r,y_pos_r)
+        pygame.draw.circle(screen, (255,0, 0), (x_pos_r, y_pos_r),10)
+        
+    if keysPressed[pygame.K_w]:
+        x_pos_r = moveLeft(image,x_pos_r,y_pos_r)
+        pygame.draw.circle(screen, (255,0, 0), (x_pos_r, y_pos_r),10)
+    
+    if keysPressed[pygame.K_w]:
+        x_pos_r = moveRight(image,x_pos_r,y_pos_r)
+        pygame.draw.circle(screen, (255,0, 0), (x_pos_r, y_pos_r),10)
+    
+        
+        
     
     for event in pygame.event.get():
         
@@ -518,7 +539,19 @@ while running:
 
         if event.type == pygame.QUIT:
             running = False
-
+#        elif event.type==KEYDOWN:
+#            if event.key==K_w:#moves banshee up if w pressed, same for
+#                y_pos_b = moveUp(image,x_pos_r,y_pos_r)
+#                pygame.draw.circle(screen, (255,0, 0), (x_pos_r, y_pos_r),10)
+#            elif event.key==K_a:
+#                y_pos_b = moveDown(image,x_pos_r,y_pos_r)
+#                pygame.draw.circle(screen, (255,0, 0), (x_pos_r, y_pos_r),10)
+#            elif event.key==K_d:
+#                x_pos_b = moveLeft(image,x_pos_r,y_pos_r)
+#                pygame.draw.circle(screen, (255,0, 0), (x_pos_r, y_pos_r),10)
+#            elif event.key==K_s:
+#                x_pos_b = moveRight(image,x_pos_r,y_pos_r)
+#                pygame.draw.circle(screen, (255,0, 0), (x_pos_r, y_pos_r),10)
             
         if event.type == pygame.MOUSEBUTTONDOWN and shootReady == True:
             if event.button == 1:
@@ -529,9 +562,9 @@ while running:
                 #x and y slope vars
                 slopeX = (clickX - x_pos_b)/20
                 slopeY = (clickY - y_pos_b)/20
-                #position of the projectile
-                projX = x_pos_b + (slopeX / 20)
-                projY = y_pos_b + (slopeY / 20)
+                #position of the projectile, +7 ensures no collision with shooter
+                projX = x_pos_b + (slopeX / 20)+7
+                projY = y_pos_b + (slopeY / 20)+7
                 
                 pygame.draw.circle(screen, (0,255,0), (int(projX), int(projY)),10)
                 #pygame.draw.circle(screen, (0,255,0), (int(projX), int(projY)),5)    
@@ -544,7 +577,7 @@ while running:
                 phasing = True;
                 phasingReady = False;
                 phaseStart = elapsed;
-                print("phasing is " + str(phasing));
+                #print("phasing is " + str(phasing));
             
             if event.key == K_UP:
                 y_pos_b = moveUp(image,x_pos_b,y_pos_b)
@@ -734,6 +767,7 @@ while running:
        
        #was blue shot by a laser?   
     if checkPlayerLaserCollision(screen,projX, projY,x_pos_b,y_pos_b) == True and projectile == True:
+        pygame.mixer.music.stop()
         print("Red lasered Blue")
         print("Red won!");
         playsound('win.wav')
