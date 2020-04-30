@@ -507,6 +507,27 @@ while running:
         pygame.draw.circle(screen, (0, 0, 255), (x_pos_b, y_pos_b),10)
         
         
+    #this will be able to check if the user is holding a key to move
+    #reds
+    if keysPressed[pygame.K_w]:
+        y_pos_r = moveUp(image,x_pos_r,y_pos_r)
+        pygame.draw.circle(screen, (255,0, 0), (x_pos_r, y_pos_r),10)
+        
+        
+    if keysPressed[pygame.K_w]:
+        y_pos_r = moveDown(image,x_pos_r,y_pos_r)
+        pygame.draw.circle(screen, (255,0, 0), (x_pos_r, y_pos_r),10)
+        
+    if keysPressed[pygame.K_w]:
+        x_pos_r = moveLeft(image,x_pos_r,y_pos_r)
+        pygame.draw.circle(screen, (255,0, 0), (x_pos_r, y_pos_r),10)
+    
+    if keysPressed[pygame.K_w]:
+        x_pos_r = moveRight(image,x_pos_r,y_pos_r)
+        pygame.draw.circle(screen, (255,0, 0), (x_pos_r, y_pos_r),10)
+    
+        
+        
     
     for event in pygame.event.get():
         
@@ -518,7 +539,19 @@ while running:
 
         if event.type == pygame.QUIT:
             running = False
-
+#        elif event.type==KEYDOWN:
+#            if event.key==K_w:#moves banshee up if w pressed, same for
+#                y_pos_b = moveUp(image,x_pos_r,y_pos_r)
+#                pygame.draw.circle(screen, (255,0, 0), (x_pos_r, y_pos_r),10)
+#            elif event.key==K_a:
+#                y_pos_b = moveDown(image,x_pos_r,y_pos_r)
+#                pygame.draw.circle(screen, (255,0, 0), (x_pos_r, y_pos_r),10)
+#            elif event.key==K_d:
+#                x_pos_b = moveLeft(image,x_pos_r,y_pos_r)
+#                pygame.draw.circle(screen, (255,0, 0), (x_pos_r, y_pos_r),10)
+#            elif event.key==K_s:
+#                x_pos_b = moveRight(image,x_pos_r,y_pos_r)
+#                pygame.draw.circle(screen, (255,0, 0), (x_pos_r, y_pos_r),10)
             
         if event.type == pygame.MOUSEBUTTONDOWN and shootReady == True:
             if event.button == 1:
